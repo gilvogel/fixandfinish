@@ -44,7 +44,7 @@ document.querySelector('#year').textContent = new Date().getFullYear();
 document.querySelector('#inquiry-form').addEventListener('submit', event => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
-  const notes = `FIX AND FINISH RESTORATION ? REPAIR INQUIRY\n\nName: ${data.get('name')}\nPhone: ${data.get('phone')}\nService: ${data.get('service')}\n\nProject details:\n${data.get('details')}\n\nThese notes have not been sent. Contact details are coming soon.\n`;
+  const notes = `FIX AND FINISH RESTORATION ? REPAIR INQUIRY\n\nName: ${data.get('name')}\nPhone: ${data.get('phone')}\nService: ${data.get('service')}\n\nProject details:\n${data.get('details')}\n\nThese notes have not been sent. Call Fix and Finish Restoration at 845-402-6514 to discuss your repair.\n`;
   const url = URL.createObjectURL(new Blob([notes], { type: 'text/plain;charset=utf-8' }));
   const link = document.createElement('a');
   link.href = url; link.download = 'fix-and-finish-repair-notes.txt'; document.body.append(link); link.click(); link.remove();
