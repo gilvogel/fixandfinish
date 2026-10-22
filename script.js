@@ -1,12 +1,10 @@
-﻿'use strict';
+'use strict';
 const slides = [...document.querySelectorAll('.slide')];
 const dots = [...document.querySelectorAll('.dot')];
-const captions = ['01 / THE DETAILS MAKE A HOME', '02 / A FRESHER EVERYDAY', '03 / CARE IN EVERY CORNER'];
-const hero = document.querySelector('.hero');
+const captions = ['01 / TILE & GROUT', '02 / SMALL PLUMBING REPAIRS', '03 / KITCHEN & BATHROOM FIX-UPS', '04 / HOME REPAIR & MAINTENANCE'];
 const pauseButton = document.querySelector('#pause-slides');
-const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 let current = 0;
-let paused = motionPreference.matches;
+let paused = false;
 let timer;
 function showSlide(index) {
   current = (index + slides.length) % slides.length;
@@ -23,7 +21,7 @@ function showSlide(index) {
 function stopTimer() { clearInterval(timer); }
 function startTimer() {
   stopTimer();
-  if (!paused && !document.hidden && !hero.matches(':hover') && !hero.contains(document.activeElement)) timer = setInterval(() => showSlide(current + 1), 6500);
+  if (!paused && !document.hidden) timer = setInterval(() => showSlide(current + 1), 5000);
 }
 function updatePause() {
   pauseButton.textContent = paused ? '▶' : 'Ⅱ';
@@ -34,12 +32,7 @@ document.querySelector('#prev-slide').addEventListener('click', () => { showSlid
 document.querySelector('#next-slide').addEventListener('click', () => { showSlide(current + 1); startTimer(); });
 dots.forEach((dot, i) => dot.addEventListener('click', () => { showSlide(i); startTimer(); }));
 pauseButton.addEventListener('click', () => { paused = !paused; updatePause(); });
-hero.addEventListener('mouseenter', stopTimer);
-hero.addEventListener('mouseleave', startTimer);
-hero.addEventListener('focusin', stopTimer);
-hero.addEventListener('focusout', () => setTimeout(startTimer, 0));
 document.addEventListener('visibilitychange', startTimer);
-motionPreference.addEventListener('change', event => { paused = event.matches; updatePause(); });
 updatePause();
 const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#main-nav');
@@ -51,10 +44,10 @@ document.querySelector('#year').textContent = new Date().getFullYear();
 document.querySelector('#inquiry-form').addEventListener('submit', event => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
-  const notes = `HOME REPAIR INQUIRY\n\nName: ${data.get('name')}\nPhone: ${data.get('phone')}\nService: ${data.get('service')}\n\nProject details:\n${data.get('details')}\n\nThese notes have not been sent. Contact details are coming soon.\n`;
+  const notes = `FIX AND FINISH RESTORATION ? REPAIR INQUIRY\n\nName: ${data.get('name')}\nPhone: ${data.get('phone')}\nService: ${data.get('service')}\n\nProject details:\n${data.get('details')}\n\nThese notes have not been sent. Contact details are coming soon.\n`;
   const url = URL.createObjectURL(new Blob([notes], { type: 'text/plain;charset=utf-8' }));
   const link = document.createElement('a');
-  link.href = url; link.download = 'home-repair-notes.txt'; document.body.append(link); link.click(); link.remove();
+  link.href = url; link.download = 'fix-and-finish-repair-notes.txt'; document.body.append(link); link.click(); link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
   document.querySelector('#form-status').textContent = 'Your repair notes are ready to save. Nothing has been sent.';
 });
